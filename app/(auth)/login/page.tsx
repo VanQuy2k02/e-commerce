@@ -25,7 +25,7 @@ export default function Login() {
         <div className="flex gap-8 border-b border-[#CFD9E8] mb-3">
           <span
             onClick={() => router.push('/login')}
-            className="text-1c text-14 font-bold leading-height-21 pt-4 pb-[13px] inline  border-b-2 border-black cursor-pointer"
+            className="text-1c text-14 font-bold leading-height-21 pt-4 pb-[13px] inline  border-b-2 border-[#E5E8EB] cursor-pointer"
           >
             Login
           </span>
@@ -48,7 +48,7 @@ export default function Login() {
                 },
               })}
               className="mt-2 px-[15px] py-[15px] border rounded-[8px]"
-              placeholder="Enter your useName"
+              placeholder="Enter your UserName"
             />
             {errors.username && (
               <p className="text-red-500 text-sm mt-1">{errors.username.message}</p>
@@ -70,7 +70,7 @@ export default function Login() {
                 },
               })}
               className="mt-2 px-[15px] py-[15px] border rounded-[8px]"
-              placeholder="Enter your useName"
+              placeholder="Enter your Password"
             />
             {errors.password && (
               <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
