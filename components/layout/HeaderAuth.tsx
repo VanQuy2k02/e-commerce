@@ -1,6 +1,7 @@
 'use client';
-import { menu } from '@/constants/menu';
+import { menu_auth } from '@/constants/menu';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -12,10 +13,10 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useRouter } from 'next/navigation';
-export default function Header() {
+export default function HeaderAuth() {
   const authen = false;
   const router = useRouter();
+
   return (
     <main className=" max-w-[1280px] w-full mx-auto border-b border-gray-300 ">
       <div className="flex justify-between items-center px-10 py-4 ">
@@ -25,8 +26,8 @@ export default function Header() {
         </div>
         <div className="flex gap-8 items-center">
           <ul className="flex gap-9 items-center">
-            {menu.length > 0 &&
-              menu.map((item, index) => (
+            {menu_auth.length > 0 &&
+              menu_auth.map((item, index) => (
                 <li
                   key={index}
                   className="text-14 text-1c font-medium leading-height-21 py-[9.5px] cursor-pointer"
@@ -35,14 +36,6 @@ export default function Header() {
                 </li>
               ))}
           </ul>
-          <div className="flex gap-2">
-            <button className="bg-f5 w-10 h-10 rounded-lg flex items-center justify-center ">
-              <Image src="/images/wislist.png" alt="wishlist_icon" width={20} height={20} />
-            </button>
-            <button className="bg-f5 w-10 h-10 rounded-lg flex items-center justify-center ">
-              <Image src="/images/cart.png" alt="wishlist_icon" width={20} height={20} />
-            </button>
-          </div>
           <div>
             {authen ? (
               <Avatar>
