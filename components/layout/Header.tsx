@@ -36,7 +36,10 @@ export default function Header() {
               ))}
           </ul>
           <div className="flex gap-2">
-            <button className="bg-f5 w-10 h-10 rounded-lg flex items-center justify-center ">
+            <button
+              onClick={() => router.push('/products/wishlist')}
+              className="bg-f5 w-10 h-10 rounded-lg flex items-center justify-center"
+            >
               <Image src="/images/wislist.png" alt="wishlist_icon" width={20} height={20} />
             </button>
             <button className="bg-f5 w-10 h-10 rounded-lg flex items-center justify-center ">

@@ -13,6 +13,7 @@ import {
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import Link from 'next/link';
 export default function HeaderAuth() {
   const authen = false;
   const router = useRouter();
@@ -25,17 +26,18 @@ export default function HeaderAuth() {
           <h3 className="text-18 text-1c font-bold leading-height-23">StyleHub</h3>
         </div>
         <div className="flex gap-8 items-center">
-          <ul className="flex gap-9 items-center">
+          <div className="flex gap-9 items-center">
             {menu_auth.length > 0 &&
               menu_auth.map((item, index) => (
-                <li
+                <Link
+                  href={item.src}
                   key={index}
                   className="text-14 text-1c font-medium leading-height-21 py-[9.5px] cursor-pointer"
                 >
-                  {item}
-                </li>
+                  {item.name}
+                </Link>
               ))}
-          </ul>
+          </div>
           <div>
             {authen ? (
               <Avatar>

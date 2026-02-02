@@ -10,3 +10,10 @@ export const trending_products = [
   { image: '/images/trending-product3.png', name: 'Minimalist Vase', price: '$29.99' },
   { image: '/images/trending-product4.png', name: 'Wireless Headphones', price: '$129.99' },
 ];
+
+export const wishlist_products = [
+  { id: 1, image: '/images/wishlist_image1.png', name: 'Cozy Knit Sweater', price: '$79.99' },
+  { id: 2, image: '/images/wishlist_image2.png', name: 'Classic Denim Jeans', price: '$59.99' },
+  { id: 3, image: '/images/wishlist_image3.png', name: 'Leather Ankle Boots', price: '$129.99' },
+  { id: 4, image: '/images/wishlist_image4.png', name: 'Cotton Blend T-Shirt', price: '$29.99' },
+];
