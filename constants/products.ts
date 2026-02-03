@@ -17,3 +17,33 @@ export const wishlist_products = [
   { id: 3, image: '/images/wishlist_image3.png', name: 'Leather Ankle Boots', price: '$129.99' },
   { id: 4, image: '/images/wishlist_image4.png', name: 'Cotton Blend T-Shirt', price: '$29.99' },
 ];
+
+export const carts_products = [
+  {
+    id: 1,
+    image: '/images/cart-product1.png',
+    name: 'Classic Cotton T-Shirt',
+    price: '$79.99',
+    total: '$79.99',
+    quantity: 1,
+    size: 'M',
+  },
+  {
+    id: 2,
+    image: '/images/cart-product2.png',
+    name: 'Slim Fit Jeans',
+    price: '$59.99',
+    total: '$59.99',
+    quantity: 1,
+    size: 'L',
+  },
+  {
+    id: 3,
+    image: '/images/cart-product3.png',
+    name: 'Leather Ankle Boots',
+    price: '$129.99',
+    total: '$129.99',
+    quantity: 1,
+    size: 'XL',
+  },
+];
