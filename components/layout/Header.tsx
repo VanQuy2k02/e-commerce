@@ -19,7 +19,7 @@ export default function Header() {
   return (
     <main className=" max-w-[1280px] w-full mx-auto border-b border-gray-300 ">
       <div className="flex justify-between items-center px-10 py-4 ">
-        <div className="flex gap-4 items-center">
+        <div onClick={() => router.push('/')} className="flex gap-4 items-center cursor-pointer">
           <Image src="/images/logo.png" alt="logo_img" width={16} height={16} />
           <h3 className="text-18 text-1c font-bold leading-height-23">StyleHub</h3>
         </div>
