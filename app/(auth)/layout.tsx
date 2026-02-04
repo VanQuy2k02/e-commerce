@@ -6,9 +6,9 @@ interface Props {
 
 export default function MainLayout({ children }: Props) {
   return (
-    <>
+    <div>
       <HeaderAuth />
       <main>{children}</main>
-    </>
+    </div>
   );
 }

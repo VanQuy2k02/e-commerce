@@ -65,7 +65,7 @@ export default function Cart() {
       </div>
       <div className="px-10 py-3">
         <button
-          onClick={() => router.push('/')}
+          onClick={() => router.push('/products')}
           className="px-4 py-[9.5px] rounded-[8px] bg-f5 text-1c font-bold text-14 leading-height-21"
         >
           Continue Shopping

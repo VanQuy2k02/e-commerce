@@ -47,3 +47,54 @@ export const carts_products = [
     size: 'XL',
   },
 ];
+
+export const list_products = [
+  {
+    id: 1,
+    image: '/images/product1.png',
+    name: 'Elegant Summer Dress',
+    price: '$79.99',
+  },
+  {
+    id: 2,
+    image: '/images/product2.png',
+    name: 'Casual Denim Jacket',
+    price: '$79.99',
+  },
+  {
+    id: 3,
+    image: '/images/product3.png',
+    name: 'Leather Ankle Boots',
+    price: '$79.99',
+  },
+  {
+    id: 4,
+    image: '/images/product4.png',
+    name: 'Elegant Summer Dress',
+    price: '$79.99',
+  },
+  {
+    id: 5,
+    image: '/images/product5.png',
+    name: 'Classic White Sneakers',
+    price: '$79.99',
+  },
+  {
+    id: 6,
+    image: '/images/product6.png',
+    name: 'Stylish Crossbody Bag',
+    price: '$79.99',
+  },
+  {
+    id: 7,
+    image: '/images/product7.png',
+    name: 'Minimalist Gold Necklace',
+    price: '$89.99',
+  },
+  {
+    id: 8,
+    image: '/images/product8.png',
+    name: 'Cozy Knit Sweater',
+    price: '$29.99',
+  },
+];

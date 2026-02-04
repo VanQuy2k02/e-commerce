@@ -13,6 +13,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 export default function Header() {
   const authen = false;
   const router = useRouter();
@@ -27,11 +28,13 @@ export default function Header() {
           <ul className="flex gap-9 items-center">
             {menu.length > 0 &&
               menu.map((item, index) => (
-                <li
-                  key={index}
-                  className="text-14 text-1c font-medium leading-height-21 py-[9.5px] cursor-pointer"
-                >
-                  {item}
+                <li key={index}>
+                  <Link
+                    href={item.src}
+                    className="text-14 text-1c font-medium leading-height-21 py-[9.5px] cursor-pointer hover:text-blue-600"
+                  >
+                    {item.name}
+                  </Link>
                 </li>
               ))}
           </ul>
