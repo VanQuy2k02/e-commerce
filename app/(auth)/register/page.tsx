@@ -1,24 +1,37 @@
 'use client';
+import { Auth } from '@/service/authencation';
+import { signupReq } from '@/types/typeAuth';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-
-type FormData = {
-  username: string;
-  password: string;
-  name: string;
-  email: string;
-  phone: string;
-};
+import { toast } from 'sonner';
 
 export default function Register() {
   const router = useRouter();
+  const [loading, setLoading] = useState<boolean>(false);
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm<FormData>();
-  const onSubmit = handleSubmit((data) => console.log(data));
+  } = useForm<signupReq>();
+  const onSubmit = handleSubmit(async (data: signupReq) => {
+    try {
+      setLoading(true);
+      const res = await Auth.register(data);
+      if (res) {
+        toast.success('Đăng ký thành công', { duration: 2000 });
+        router.push('/login');
+        reset();
+      }
+    } catch (error) {
+      toast.error('Đăng ký thất bại', { duration: 2000 });
+      reset();
+    } finally {
+      setLoading(false);
+    }
+  });
   return (
     <div className="max-w-[1280px] mx-auto w-full">
       <div className="py-5 px-6">
@@ -129,8 +142,9 @@ export default function Register() {
               <button
                 className="bg-f2 text-[#F7FAFC] text-14 font-bold py-[9.5px] px-44 text-center rounded-[8px] mx-3 my-4"
                 type="submit"
+                disabled={loading}
               >
-                Create Account
+                {loading ? 'Đang xử lý...' : 'Create Account'}
               </button>
             </form>
             <p className="px-3 ml-24 text-9c text-14 leading-height-21 font-normal">

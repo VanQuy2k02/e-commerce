@@ -1,3 +1,5 @@
+import { ProductDetailProps, ResponseProduct } from '@/types/typeProduct';
+
 interface queryProps {
   page?: number;
   limit?: number;
@@ -9,6 +11,7 @@ interface queryProps {
   minPrice?: number;
   maxPrice?: number;
 }
+
 export const handleProduct = {
   getProduct: async ({
     page,
@@ -24,12 +27,8 @@ export const handleProduct = {
     const url = new URL('http://localhost:3000/api/products');
     const param = url.searchParams;
 
-    if (page) {
-      param.set('page', String(page));
-    }
-    if (limit) {
-      param.set('limit', String(limit));
-    }
+    param.set('page', String(page));
+    param.set('limit', String(limit));
 
     if (category) {
       param.set('category', String(category));
@@ -43,7 +42,7 @@ export const handleProduct = {
       param.set('orderBy', String(orderBy));
     }
 
-    if (supplier) {
+    if (order) {
       param.set('order', String(order));
     }
 
@@ -60,10 +59,32 @@ export const handleProduct = {
     }
 
     const res = await fetch(`${url.toString()}`, {
-      cache: 'no-store',
+      next: {
+        revalidate: 3000,
+      },
     });
     if (!res.ok) {
       throw new Error('Loi call api!');
+    }
+    const data: ResponseProduct = await res.json();
+    return data;
+  },
+
+  getDetailProduct: async (id: string) => {
+    const res = await fetch(`http://localhost:3000/api/products/${id}`, {
+      cache: 'no-cache',
+    });
+    if (!res.ok) {
+      throw new Error('Loi call api');
+    }
+    const data: ProductDetailProps = await res.json();
+    return data;
+  },
+
+  getReviewsProduct: async (id: string) => {
+    const res = await fetch(`http://localhost:3000/api/products/${id}/reviews`);
+    if (!res.ok) {
+      throw new Error('Loi call api');
     }
     const data = await res.json();
     return data;

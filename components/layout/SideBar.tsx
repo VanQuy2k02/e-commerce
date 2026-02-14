@@ -1,24 +1,55 @@
 'use client';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import { category_menu, orderBy_menu } from '@/constants/category';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import { category_menu, order_menu, orderBy_menu } from '@/constants/category';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React from 'react';
 
 export default function SideBar() {
+  const searchParams = useSearchParams();
   const router = useRouter();
-  const [select, setSelect] = useState<string | null>(null);
-  const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { value } = e.target;
+  const sort = searchParams.get('order') || '';
+  const orderBy = searchParams.get('orderBy') || '';
+  const select = searchParams.get('category');
+  const minPrice = Number(searchParams.get('minPrice')) || 1;
+  const maxPrice = Number(searchParams.get('maxPrice')) || 10000;
 
-    router.replace(`/products?category=${value}`);
-    setSelect((prev) => (prev === value ? null : value));
+  const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, type, name } = e.target;
+    const params = new URLSearchParams(searchParams.toString());
+    if (type === 'checkbox') {
+      const currenCategory = params.get('category');
+      if (currenCategory === value) {
+        params.delete('category');
+        params.delete('page');
+      } else {
+        params.set('category', String(value));
+        params.set('page', String(1));
+      }
+      router.replace(`/products/?${params.toString()}`);
+    }
+
+    if (type === 'radio' && name === 'chose') {
+      if (!value) return;
+      params.set('orderBy', String(value));
+      router.replace(`/products?${params.toString()}`);
+    }
+
+    if (type === 'radio' && name === 'chose-order') {
+      if (!value) return;
+      params.set('order', String(value));
+      params.set('page', String(1));
+      router.replace(`/products?${params.toString()}`);
+    }
   };
 
   const handleAfterChange = (value: number | number[]) => {
     if (!Array.isArray(value)) return;
-    console.log(value[0]);
-    console.log(value[1]);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set('minPrice', String(value[0]));
+    params.set('maxPrice', String(value[1]));
+    params.set('page', String(1));
+    router.replace(`/products?${params.toString()}`);
   };
 
   return (
@@ -47,10 +78,11 @@ export default function SideBar() {
           <p className="text-1c leading-6 font-medium">Price</p>
           <div className="w-[288px] mt-3">
             <Slider
+              key={`${minPrice}-${maxPrice}`}
               range
               min={1}
               max={10000}
-              defaultValue={[1, 10000]}
+              defaultValue={[minPrice, maxPrice]}
               onChangeComplete={handleAfterChange}
             />
           </div>
@@ -67,6 +99,7 @@ export default function SideBar() {
                     type="radio"
                     name="chose"
                     value={item.value}
+                    checked={orderBy === item.value}
                     className="w-5 h-5 bg-f2"
                     onChange={handleOnchange}
                   />
@@ -74,21 +107,27 @@ export default function SideBar() {
                 </div>
               </li>
             ))}
-          <select
-            name=""
-            id=""
-            className="px-[15px] py-[15.5px] flex gap-4 items-center rounded-[8px] border border-[#CFD9E8]"
-          >
-            <option value="" className="text-1c text-14 font-medium leading-height-21">
-              Sắp xếp theo
-            </option>
-            <option value="asc" className="text-1c text-14 font-medium leading-height-21">
-              Low to High
-            </option>
-            <option value="desc" className="text-1c text-14 font-medium leading-height-21">
-              High to Low
-            </option>
-          </select>
+        </ul>
+      </div>
+      <div>
+        <h3 className="mt-4 mb-2 text-1c text-18 font-bold leading-height-23">Order</h3>
+        <ul className="my-4 flex flex-col gap-3">
+          {order_menu.length > 0 &&
+            order_menu.map((item, index) => (
+              <li key={index} className="flex flex-col gap-5">
+                <div className="px-[15px] py-[15.5px] flex gap-4 items-center rounded-[8px] border border-[#CFD9E8]">
+                  <input
+                    type="radio"
+                    name="chose-order"
+                    value={item.value}
+                    checked={sort === item.value}
+                    className="w-5 h-5 bg-f2"
+                    onChange={handleOnchange}
+                  />
+                  <p className="text-1c text-14 font-medium leading-height-21">{item.name}</p>
+                </div>
+              </li>
+            ))}
         </ul>
       </div>
     </div>

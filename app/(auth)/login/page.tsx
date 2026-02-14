@@ -1,20 +1,42 @@
 'use client';
+import { Auth } from '@/service/authencation';
+import { LoginProps } from '@/types/typeAuth';
+import useAuthStore from '@/zustand/useAuthStore';
+import { Eye, EyeOff } from 'lucide-react';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
-type FormData = {
-  username: string;
-  password: string;
-};
 export default function Login() {
   const router = useRouter();
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
+  const { setUser } = useAuthStore();
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
-  } = useForm<FormData>();
-  const onSubmit = handleSubmit((data) => console.log(data));
+  } = useForm<LoginProps>();
+  const onSubmit = handleSubmit(async (data: LoginProps) => {
+    try {
+      setLoading(true);
+      const res = await Auth.login(data);
+      if (res) {
+        setUser(res);
+        toast.success('Đăng nhập thành công', { duration: 2000 });
+        router.push('/');
+        reset();
+      }
+    } catch (error) {
+      toast.error('Đăng nhập thất bại', { duration: 2000 });
+      reset();
+    } finally {
+      setLoading(false);
+    }
+  });
 
   return (
     <div className="max-w-[960px] mx-auto w-full">
@@ -56,31 +78,41 @@ export default function Login() {
           </div>
           <div className="flex flex-col w-120 h-[112px]">
             <label className="text-1c font-medium leading-6">Password</label>
-            <input
-              type="password"
-              {...register('password', {
-                required: 'Password không được để trống',
-                minLength: {
-                  value: 6,
-                  message: 'Password tối thiểu 6 ký tự',
-                },
-                pattern: {
-                  value: /^(?=.*[A-Za-z])(?=.*\d).+$/,
-                  message: 'Password phải có ít nhất 1 chữ và 1 số',
-                },
-              })}
-              className="mt-2 px-[15px] py-[15px] border rounded-[8px]"
-              placeholder="Enter your Password"
-            />
+            <div className="relative mt-2">
+              <input
+                type={showPassword ? 'text' : 'password'}
+                {...register('password', {
+                  required: 'Password không được để trống',
+                  minLength: {
+                    value: 6,
+                    message: 'Password tối thiểu 6 ký tự',
+                  },
+                  pattern: {
+                    value: /^(?=.*[A-Za-z])(?=.*\d).+$/,
+                    message: 'Password phải có ít nhất 1 chữ và 1 số',
+                  },
+                })}
+                className=" px-[15px] w-[480px] py-[15px] border rounded-[8px]"
+                placeholder="Enter your Password"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              >
+                {showPassword ? <Eye size={20} /> : <EyeOff size={20} />}
+              </button>
+            </div>
             {errors.password && (
               <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
             )}
           </div>
           <button
-            className="bg-f2 text-white py-[9.5px] px-54 text-center rounded-[8px]"
+            className="bg-f2 text-white py-[9.5px] w-[481px] text-center rounded-[8px]"
             type="submit"
+            disabled={loading}
           >
-            Sign In
+            {loading ? 'Sign In...' : 'Sign In'}
           </button>
         </form>
       </div>
