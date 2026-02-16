@@ -12,6 +12,11 @@ interface queryProps {
   maxPrice?: number;
 }
 
+const baseUrl =
+  typeof window === 'undefined'
+    ? process.env.NEXT_PUBLIC_API_ENDPOINT || 'http://localhost:3000'
+    : '';
+
 export const handleProduct = {
   getProduct: async ({
     page,
@@ -24,69 +29,51 @@ export const handleProduct = {
     minPrice,
     maxPrice,
   }: queryProps) => {
-    const url = new URL('/api/products');
+    const url = new URL(`${baseUrl}/api/products`);
     const param = url.searchParams;
 
-    param.set('page', String(page));
-    param.set('limit', String(limit));
+    if (page) param.set('page', String(page));
+    if (limit) param.set('limit', String(limit));
+    if (category) param.set('category', category);
+    if (supplier) param.set('supplier', supplier);
+    if (orderBy) param.set('orderBy', orderBy);
+    if (order) param.set('order', order);
+    if (hideOutOfStock) param.set('hideOutOfStock', hideOutOfStock);
+    if (minPrice) param.set('minPrice', String(minPrice));
+    if (maxPrice) param.set('maxPrice', String(maxPrice));
 
-    if (category) {
-      param.set('category', String(category));
-    }
-
-    if (supplier) {
-      param.set('supplier', String(supplier));
-    }
-
-    if (orderBy) {
-      param.set('orderBy', String(orderBy));
-    }
-
-    if (order) {
-      param.set('order', String(order));
-    }
-
-    if (supplier) {
-      param.set('hideOutOfStock', String(hideOutOfStock));
-    }
-
-    if (minPrice) {
-      param.set('minPrice', String(minPrice));
-    }
-
-    if (maxPrice) {
-      param.set('maxPrice', String(maxPrice));
-    }
-
-    const res = await fetch(`${url.toString()}`, {
-      next: {
-        revalidate: 3000,
-      },
+    const res = await fetch(url.toString(), {
+      next: { revalidate: 3000 },
     });
+
     if (!res.ok) {
-      throw new Error('Loi call api!');
+      throw new Error('Lỗi call api products');
     }
-    const data: ResponseProduct = await res.json();
-    return data;
+
+    return res.json() as Promise<ResponseProduct>;
   },
 
   getDetailProduct: async (id: string) => {
-    const res = await fetch(`/api/products/${id}`, {
-      cache: 'no-cache',
+    const res = await fetch(`${baseUrl}/api/products/${id}`, {
+      cache: 'no-store',
     });
+
     if (!res.ok) {
-      throw new Error('Loi call api');
+      throw new Error('Lỗi call api product detail');
     }
-    const data: ProductDetailProps = await res.json();
-    return data;
+
+    return res.json() as Promise<ProductDetailProps>;
   },
 
   getReviewsProduct: async (id: string) => {
-    const res = await fetch(`/api/products/${id}/reviews`);
+    const res = await fetch(`${baseUrl}/api/products/${id}/reviews`, {
+      cache: 'no-store',
+    });
+
     if (!res.ok) {
-      throw new Error('Loi call api');
+      throw new Error('Lỗi call api reviews');
     }
-    const data = await res.json();
-    return data;
+
+    return res.json();
   },
 };
