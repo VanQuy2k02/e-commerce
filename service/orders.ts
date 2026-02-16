@@ -2,7 +2,7 @@ import { OrderPayload } from '@/types/typeCheckout';
 
 export const handleOrders = {
   getOrders: async () => {
-    const res = await fetch('http://localhost:3000/api/orders', {
+    const res = await fetch('/api/orders', {
       headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',
@@ -20,7 +20,7 @@ export const handleOrders = {
   },
 
   getDetailOrders: async (ordersId: number) => {
-    const res = await fetch(`http://localhost:3000/api/orders/${ordersId}`, {
+    const res = await fetch(`/api/orders/${ordersId}`, {
       headers: {
         'Content-Type': 'application/json',
         accept: 'application/json',
@@ -38,7 +38,7 @@ export const handleOrders = {
   },
 
   postOrders: async (data: OrderPayload) => {
-    const res = await fetch('http://localhost:3000/api/orders', {
+    const res = await fetch('/api/orders', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

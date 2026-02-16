@@ -24,7 +24,7 @@ export const handleProduct = {
     minPrice,
     maxPrice,
   }: queryProps) => {
-    const url = new URL('http://localhost:3000/api/products');
+    const url = new URL('/api/products');
     const param = url.searchParams;
 
     param.set('page', String(page));
@@ -71,7 +71,7 @@ export const handleProduct = {
   },
 
   getDetailProduct: async (id: string) => {
-    const res = await fetch(`http://localhost:3000/api/products/${id}`, {
+    const res = await fetch(`/api/products/${id}`, {
       cache: 'no-cache',
     });
     if (!res.ok) {
@@ -82,7 +82,7 @@ export const handleProduct = {
   },
 
   getReviewsProduct: async (id: string) => {
-    const res = await fetch(`http://localhost:3000/api/products/${id}/reviews`);
+    const res = await fetch(`/api/products/${id}/reviews`);
     if (!res.ok) {
       throw new Error('Loi call api');
     }
