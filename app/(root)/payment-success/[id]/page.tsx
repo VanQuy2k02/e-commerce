@@ -1,14 +1,13 @@
 import { handleOrders } from '@/service/orders';
-import OrderDetailUI from './OrderDetailUI';
+import PaymentSuccessUI from '../PaymentSuccessUI';
 
-export default async function OrdersDetailPage({ params }: { params: { id: number } }) {
+export default async function OrderSuccessPageUI({ params }: { params: { id: number } }) {
   const { id } = await params;
   if (!id) return;
   const res = await handleOrders.getDetailOrders(id);
-
   return (
     <div>
-      <OrderDetailUI order={res.data} />
+      <PaymentSuccessUI order={res.data} />
     </div>
   );
 }

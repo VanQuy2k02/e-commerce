@@ -21,7 +21,6 @@ export default function Orders() {
     };
     loadingDataOrders();
   }, []);
-  console.log(orders, 'orders');
   const ordersItem = showOrders ? orders : orders.slice(0, 2);
 
   return (

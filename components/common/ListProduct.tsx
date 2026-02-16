@@ -9,6 +9,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import PaginationPage from './PaginationPage';
 import { useCartStore } from '@/zustand/useCartStore';
 import useWishListStore from '@/zustand/useWishListStore';
+import { useToastStore } from '@/zustand/useToastStore';
 
 export default function ListProduct({
   // category,
@@ -28,10 +29,11 @@ export default function ListProduct({
   const router = useRouter();
   const { addToCart } = useCartStore();
   const { toggle, wishlistItems } = useWishListStore();
-
+  const { show } = useToastStore();
   const handleAddToCart = (productId: number) => {
     if (!productId) return;
     addToCart(productId);
+    show('success', 'Thêm sản phẩm thành công', { duration: 2000 });
   };
 
   const addToWishlist = (productId: number) => {

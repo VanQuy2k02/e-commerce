@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { handleCart } from '@/service/cart';
 import useAuthStore from './useAuthStore';
+import { useToastStore } from './useToastStore';
 export interface Product {
   id: number;
   name?: string;

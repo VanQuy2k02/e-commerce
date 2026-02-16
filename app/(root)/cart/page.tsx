@@ -120,7 +120,18 @@ export default function Cart() {
             <span>${total.toFixed(2)}</span>
           </div>
 
-          <button className="mt-8 w-full py-4 rounded-md bg-9c text-white font-semibold hover:opacity-90 transition-opacity">
+          <button
+            onClick={() => router.push('/cart/checkout')}
+            disabled={carts.length === 0}
+            className={`
+    mt-8 w-full py-4 rounded-md font-semibold transition-all
+    ${
+      carts.length === 0
+        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+        : 'bg-black text-white hover:opacity-90'
+    }
+  `}
+          >
             Proceed to Checkout
           </button>
         </div>
