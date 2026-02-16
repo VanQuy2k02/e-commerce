@@ -12,11 +12,6 @@ interface queryProps {
   maxPrice?: number;
 }
 
-const baseUrl =
-  typeof window === 'undefined'
-    ? process.env.NEXT_PUBLIC_API_ENDPOINT || 'http://localhost:3000'
-    : '';
-
 export const handleProduct = {
   getProduct: async ({
     page,
@@ -29,7 +24,7 @@ export const handleProduct = {
     minPrice,
     maxPrice,
   }: queryProps) => {
-    const url = new URL(`${baseUrl}/api/products`);
+    const url = new URL('http://localhost:3000/api/products');
     const param = url.searchParams;
 
     if (page) param.set('page', String(page));
@@ -54,7 +49,7 @@ export const handleProduct = {
   },
 
   getDetailProduct: async (id: string) => {
-    const res = await fetch(`${baseUrl}/api/products/${id}`, {
+    const res = await fetch(`http://localhost:3000/api/products/${id}`, {
       cache: 'no-store',
     });
 
@@ -66,7 +61,7 @@ export const handleProduct = {
   },
 
   getReviewsProduct: async (id: string) => {
-    const res = await fetch(`${baseUrl}/api/products/${id}/reviews`, {
+    const res = await fetch(`http://localhost:3000/api/products/${id}/reviews`, {
       cache: 'no-store',
     });
 

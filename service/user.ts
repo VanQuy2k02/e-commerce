@@ -3,7 +3,7 @@ import { ProfilerProps } from 'react';
 
 export const User = {
   getUserProfile: async (customerId: number) => {
-    const res = await fetch(`/api/profile/${customerId}`);
+    const res = await fetch(`http://localhost:3000/api/profile/${customerId}`);
 
     if (!res.ok) {
       const text = await res.text();
@@ -14,7 +14,7 @@ export const User = {
   },
 
   editUserProfile: async (customerId: number, data: editProps) => {
-    const res = await fetch(`/api/profile/${customerId}`, {
+    const res = await fetch(`http://localhost:3000/api/profile/${customerId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

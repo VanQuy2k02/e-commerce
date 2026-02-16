@@ -2,7 +2,7 @@ import { WishlistItem } from '@/types/typeWishlist';
 
 export const handleWishList = {
   getWishList: async () => {
-    const res = await fetch('/api/wishlist');
+    const res = await fetch('http://localhost:3000/api/wishlist');
     const result = await res.json();
     if (!res.ok) {
       console.log('Backend Error');
@@ -10,7 +10,7 @@ export const handleWishList = {
     return result.wishlist.wishlistItems;
   },
   updateWishList: async (data: WishlistItem[]) => {
-    const res = await fetch('/api/wishlist', {
+    const res = await fetch('http://localhost:3000/api/wishlist', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
